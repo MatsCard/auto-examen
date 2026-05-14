@@ -1,0 +1,149 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+.game-screen {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.game-card {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  padding: 48px 0 0;
+}
+
+.game-setup {
+  max-width: 520px;
+  margin: 0 auto;
+  gap: 28px;
+  padding: 32px 24px;
+  justify-content: center;
+}
+
+.game-title,
+.game-message {
+  margin: 0;
+  color: #000000;
+  text-align: center;
+}
+
+.game-message {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 400;
+}
+
+.game-result-value {
+  color: #000000;
+  font-weight: 700;
+}
+
+.game-title {
+  color: #0f172a;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  line-height: 1;
+}
+
+.game-symbol {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  font-size: clamp(9rem, 34vw, 15rem);
+  font-weight: 700;
+  line-height: 1;
+  color: #0f172a;
+}
+
+.game-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game-field-label {
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.game-select,
+.game-start-button {
+  width: 100%;
+  min-height: 72px;
+  border: none;
+  border-radius: 16px;
+  font: inherit;
+}
+
+.game-select {
+  padding: 0 20px;
+  font-size: 1.5rem;
+  color: #0f172a;
+  background: #e2e8f0;
+}
+
+.game-start-button {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #1d4ed8;
+  cursor: pointer;
+}
+
+.game-buttons {
+  width: min(100%, 760px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  padding: 0 20px;
+}
+
+.game-buttons button {
+  border: none;
+  border-radius: 16px;
+  min-height: 160px;
+  padding: 24px;
+  font-size: clamp(4rem, 11vw, 6rem);
+  font-weight: 700;
+  color: #ffffff;
+  background: #1d4ed8;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.game-buttons button:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.game-start-button:hover {
+  opacity: 0.92;
+}
