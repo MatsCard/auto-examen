@@ -169,11 +169,11 @@ export default function HomePage() {
           {target}
         </div>
         <div className="game-buttons">
-          <button type="button" onClick={() => nextRound("x")} disabled={isWaiting}>
-            x
-          </button>
           <button type="button" onClick={() => nextRound("+")} disabled={isWaiting}>
             +
+          </button>
+          <button type="button" onClick={() => nextRound("x")} disabled={isWaiting}>
+            x
           </button>
         </div>
       </div>
