@@ -87,6 +87,22 @@ button {
   gap: 12px;
 }
 
+.game-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #0f172a;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.game-toggle input {
+  width: 20px;
+  height: 20px;
+}
+
 .game-field-label {
   color: #0f172a;
   font-size: 1.1rem;

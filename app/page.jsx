@@ -19,8 +19,15 @@ export default function HomePage() {
   const [averageReactionMs, setAverageReactionMs] = useState(0);
   const [selectedRounds, setSelectedRounds] = useState(10);
   const [pauseMs, setPauseMs] = useState(1000);
+  const [showButtons, setShowButtons] = useState(false);
   const shownAtRef = useRef(Date.now());
   const totalReactionMsRef = useRef(0);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setShowButtons(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!isWaiting || screen !== "playing") {
@@ -35,6 +42,48 @@ export default function HomePage() {
 
     return () => window.clearTimeout(timeoutId);
   }, [isWaiting, pauseMs, screen]);
+
+  useEffect(() => {
+    function handleInput(choice) {
+      nextRound(choice);
+    }
+
+    function handleKeyDown(event) {
+      if (event.key === "+") {
+        handleInput("+");
+      }
+
+      if (event.key.toLowerCase() === "x") {
+        handleInput("x");
+      }
+    }
+
+    function handleMouseDown(event) {
+      if (event.button === 0) {
+        handleInput("+");
+      }
+
+      if (event.button === 2) {
+        handleInput("x");
+      }
+    }
+
+    function handleContextMenu(event) {
+      if (screen === "playing") {
+        event.preventDefault();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("contextmenu", handleContextMenu);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, [screen, isWaiting, target, total, selectedRounds]);
 
   function startGame() {
     totalReactionMsRef.current = 0;
@@ -109,6 +158,15 @@ export default function HomePage() {
               ))}
             </select>
           </label>
+          <label className="game-toggle" htmlFor="show-buttons">
+            <input
+              id="show-buttons"
+              type="checkbox"
+              checked={showButtons}
+              onChange={(event) => setShowButtons(event.target.checked)}
+            />
+            <span>Mostrar botones en pantalla</span>
+          </label>
           <button type="button" className="game-start-button" onClick={startGame}>
             Empezar
           </button>
@@ -158,6 +216,15 @@ export default function HomePage() {
               ))}
             </select>
           </label>
+          <label className="game-toggle" htmlFor="finished-show-buttons">
+            <input
+              id="finished-show-buttons"
+              type="checkbox"
+              checked={showButtons}
+              onChange={(event) => setShowButtons(event.target.checked)}
+            />
+            <span>Mostrar botones en pantalla</span>
+          </label>
           <button type="button" className="game-start-button" onClick={startGame}>
             Jugar de Nuevo
           </button>
@@ -174,14 +241,16 @@ export default function HomePage() {
         <div className="game-symbol" aria-label="Simbolo actual">
           {target}
         </div>
-        <div className="game-buttons">
-          <button type="button" onClick={() => nextRound("+")} disabled={isWaiting}>
-            +
-          </button>
-          <button type="button" onClick={() => nextRound("x")} disabled={isWaiting}>
-            x
-          </button>
-        </div>
+        {showButtons ? (
+          <div className="game-buttons">
+            <button type="button" onClick={() => nextRound("+")} disabled={isWaiting}>
+              +
+            </button>
+            <button type="button" onClick={() => nextRound("x")} disabled={isWaiting}>
+              x
+            </button>
+          </div>
+        ) : null}
       </div>
     </main>
   );
