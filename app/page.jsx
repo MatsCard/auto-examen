@@ -14,6 +14,7 @@ export default function HomePage() {
   const [screen, setScreen] = useState("start");
   const [target, setTarget] = useState("");
   const [isWaiting, setIsWaiting] = useState(false);
+  const [correct, setCorrect] = useState(0);
   const [total, setTotal] = useState(0);
   const [averageReactionMs, setAverageReactionMs] = useState(0);
   const [selectedRounds, setSelectedRounds] = useState(10);
@@ -38,6 +39,7 @@ export default function HomePage() {
   function startGame() {
     totalReactionMsRef.current = 0;
     setScreen("playing");
+    setCorrect(0);
     setTotal(0);
     setAverageReactionMs(0);
     setIsWaiting(false);
@@ -50,12 +52,16 @@ export default function HomePage() {
       return;
     }
 
+    const isCorrect = choice === target;
     const reactionMs = Date.now() - shownAtRef.current;
     const nextTotal = total + 1;
 
     totalReactionMsRef.current += reactionMs;
     setTotal(nextTotal);
     setAverageReactionMs(Math.round(totalReactionMsRef.current / nextTotal));
+    if (isCorrect) {
+      setCorrect((currentCorrect) => currentCorrect + 1);
+    }
 
     if (nextTotal >= selectedRounds) {
       setTarget("");
@@ -117,7 +123,7 @@ export default function HomePage() {
         <div className="game-card game-setup">
           <h1 className="game-title">Terminado</h1>
           <p className="game-message">
-            Total: <span className="game-result-value">{total} / {selectedRounds}</span>
+            Total: <span className="game-result-value">{correct} / {selectedRounds}</span>
           </p>
           <p className="game-message">
             Tiempo promedio: <span className="game-result-value">{averageReactionMs} ms</span>
